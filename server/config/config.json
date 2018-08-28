@@ -1,0 +1,12 @@
+{
+	"test": {
+		"PORT": 3000,
+		"MONGODB_URI": "mongodb://localhost:27017/BetaZapsTest",
+		"JWT_SECTRET": "kmkjf67234jh23vg23gu98sdf98sdfughdsbf"
+	}, 
+	"development": {
+		"PORT": 3000,
+		"MONGODB_URI": "mongodb://localhost:27017/BetaZaps",
+		"JWT_SECTRET": "nsufy734h2riuysdf8s09f80s98dfhsdf"
+	}
+}

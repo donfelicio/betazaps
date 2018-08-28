@@ -1,0 +1,30 @@
+<DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+		<title>Betazaps</title>
+	</head>
+	
+	<body>
+		<p>Welcome to betazaps</p>
+		<p>Add zap</p>
+		<form action="addZap" method="post">
+			<input type="text" name="name"/>
+			<input type="Submit" value="Submit"/>
+		</form>
+		<p>Search</p>
+		<form id="search-form">
+			<input type="text" name="query"/>
+			<input type="Submit" value="Submit"/>
+		</form>
+
+		<div id="search-results">
+			
+		</div>
+		
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/js/libs/jquery-3.3.1.min.js"></script>
+		<script src="/js/index.js"></script>
+	</body>
+</html>
