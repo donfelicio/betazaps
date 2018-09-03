@@ -103,7 +103,7 @@ button:disabled {
 .container {
 /*  display: flex; */  
   align-items: center;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   justify-content: center;
  }
@@ -115,6 +115,7 @@ button:disabled {
     width: 110px;
     background-size: 100px;
     margin-top: 5px;
+    display:block;
 }
 
 .form-field {
@@ -260,12 +261,24 @@ button:disabled {
   margin-top:10px;
 }
 
-.search-results__footer {
-  background: #e6eaee;
+.footer {
+  background: #ffffff;
+  height:10vh;
   display: flex;
   padding: 10px;
   /*height: 60px;*/
   flex-shrink: 0;
+  width:50vh;
+  margin: auto auto;
+}
+
+.footer-section {
+  padding:10px;
+  margin:10px;
+  border-style: none solid none solid;
+  border-width: 1px;
+  border-color: rgba(0,0,0,.1);
+  margin: auto auto;
 }
 
 .search-results__footer form {
@@ -309,21 +322,5 @@ button:disabled {
 @media (max-width: 600px) {
   * {
     font-size: 1rem;
-  }
-
-  .chat__sidebar {
-    display: none;
-  }
-
-  .chat__footer {
-    flex-direction: column;
-  }
-
-  .chat__footer form {
-    margin-bottom: 10px;
-  }
-
-  .chat__footer button {
-    margin-right: 0px;
   }
 }

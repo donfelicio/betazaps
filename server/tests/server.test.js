@@ -15,7 +15,7 @@ describe('POST /addZap', () => {
 		request(app)
 		.post('/addZap')
 		.send({name})
-		.expect(200)
+		.expect(302)
 		.end(done);
 	});
 

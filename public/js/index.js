@@ -1,8 +1,22 @@
 const socket = io();
 
+function QueryStringToJSON() {            
+    var pairs = location.search.slice(1).split('&');
+    
+    var result = {};
+    pairs.forEach(function(pair) {
+        pair = pair.split('=');
+        result[pair[0]] = decodeURIComponent(pair[1] || '');
+    });
+
+    return JSON.parse(JSON.stringify(result));
+}
+
+var query_string = QueryStringToJSON();
+
 socket.on('connect', function () {
 	socket.emit('search', {
-		query: ''
+		query: query_string.query
 	});
 });
 

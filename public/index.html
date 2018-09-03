@@ -13,7 +13,7 @@
 	
 <body class="search-results">
 <div class="header flex-auto flex flex-wrap">
-	<div class="logo flex-auto"></div>
+	<a href="/" class="logo flex-auto"></a>
 
 <div class="search-form center">
 		<form id="search-form" class="search-form__form ">
@@ -31,26 +31,37 @@
 		<h4 class="center mw title">Betazaps lists all Zapier zaps in beta</h4>
 		<ul class="search-results__results center br mw bo" id="search-results"></ul>
 
-		<script id="search-result-template" type="text/template">
-	    <li class="search-results">
-	      <div class="search-result__title">
-	        <h4>{{name}}</h4>
-	        <span>{{createdBy}}</span>
-	      </div>
-	      <div class="search-result__body">
-	          <p>{{description}}<p>
-	          <p>{{createdAt}}</p>
-	          <hr>
-	      </div>
-	    </li>
-	  	</script>
 		
-		<script src="/socket.io/socket.io.js"></script>
-		<script src="/js/libs/jquery-3.3.1.min.js"></script>
-		<script src="/js/libs/mustache.js"></script>
-		<script src="/js/libs/moment.js"></script>
-		<script src="/js/index.js"></script>
 	</div>
 </div>
+<div class="footer">
+	<div class="footer-section">
+		<a href="add.html">Add your beta zap</a>
+	</div>
+</div>
+
+
+
+<script id="search-result-template" type="text/template">
+    <li class="search-results">
+      <div class="search-result__title">
+        <h4>{{name}}</h4>
+        <span>{{createdBy}}</span>
+      </div>
+      <div class="search-result__body">
+          <p>{{description}}<p>
+          <p>{{createdAt}}</p>
+          <hr>
+      </div>
+    </li>
+</script>
+		
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/libs/jquery-3.3.1.min.js"></script>
+<script src="/js/libs/mustache.js"></script>
+<script src="/js/libs/moment.js"></script>
+<script src="/js/index.js"></script>
+
+
 </body>
 </html>

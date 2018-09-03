@@ -18,26 +18,36 @@ const app = new express();
 var server = http.createServer(app);
 var io = socketIO(server);
 
-app.use(express.static(publicPath));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
+app.use(express.static(publicPath, {'index':false}));
 
 io.on('connect', (socket) => {
 	console.log('New socket connected');
 
 	socket.on('search', (params) => {
-		Zap.find({name: { "$regex": params.query, "$options": "i" }})
+		if (params.query) {
+			search = {name: { "$regex": params.query, "$options": "i" }};
+		} else {
+			search = {}
+		}
+		Zap.find(search)
 		.then((results) => {
 
 			if(results.length === 0) { results = emptyRes };
 
 			io.emit('updateSearchResults', results);
+		}).catch((e) => {
+			console.log(e);
 		});
 	});
 });
 
-app.post('/addZap', (req, res) => {
-	console.log(req.body);
+app.get('/', (req, res) => {
+	res.sendFile(publicPath + '/index.html');	
+});
+
+app.post('/addzap', (req, res) => {
 	var zap = new Zap({
 		name: req.body.name,
 		description: req.body.description,
@@ -49,19 +59,19 @@ app.post('/addZap', (req, res) => {
 		createdAt: new Date().getTime()
 	});
 	zap.save().then((doc) => {
-		res.redirect('./');
+		res.redirect(`./?query=${req.body.name}`);
 	}).catch((e) => {
 		return res.status(400).send(e);
 	});
 });
 
-app.get('/zaps', (req, res) => {
-	Zap.find().then((zaps) => {
-		res.send({zaps});
-	}, (e) => {
-		res.status(400).send(e);
-	});
-});
+// app.get('/zaps', (req, res) => {
+// 	Zap.find().then((zaps) => {
+// 		res.send({zaps});
+// 	}, (e) => {
+// 		res.status(400).send(e);
+// 	});
+// });
 
 server.listen(PORT, () => {
 	console.log(`server running on port ${PORT}`);
