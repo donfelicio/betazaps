@@ -49,7 +49,7 @@ app.post('/addZap', (req, res) => {
 		createdAt: new Date().getTime()
 	});
 	zap.save().then((doc) => {
-		res.redirect(200, './');
+		res.redirect('./');
 	}).catch((e) => {
 		return res.status(400).send(e);
 	});
