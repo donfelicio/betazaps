@@ -1,44 +1,47 @@
 const socket = io();
 
+socket.on('connect', function () {
+	socket.emit('search', {
+		query: ''
+	});
+});
+
 socket.on('showResults', function () {
 	console.log('search action');
 	const params = jQuery.deparam(window.location.search);
 
 	socket.emit('search', params, function (err) {
-		if (err) {
-			alert(err);
-		} else {
-			console.log('no error');
-		};
+		err ? alert(err) : console.log('no error');
 	});
 });
+
 
 socket.on('updateSearchResults', function (results) {
 
-	let ul = jQuery('<ul></ul>');
-	Object.keys(results.results).forEach((key) => {
-		console.log(results.results[key]);
-		ul.append(jQuery('<li></li>').text(results.results[key].name));
-	});
-	jQuery('#search-results').html(ul);
+	const template = jQuery('#search-result-template').html();
+	let html;
+
+		Object.keys(results).forEach((key) => {
+			var item = Mustache.render(template, {
+				name: results[key].name,
+				description: results[key].description,
+				createdBy: results[key].createdBy,
+				createdAt: moment(results[key].createdAt).format('DD-MM-YYYY')
+			});
+
+//			if (!html) { let html = jQuery(item) }else{ html.append(item)};			
+			!html ? html = jQuery(item) : html.append(item);				
+		});
+
+	jQuery('#search-results').html(html);
 });
 
-jQuery('#search-form').on('submit', function (e) {
+jQuery('#search-form').on('input submit', function (e) {
   e.preventDefault();
-
   const messageTextBox = jQuery('[name=query]');
 
   socket.emit('search', {
     query: messageTextBox.val()
-  }, function () {
-    messageTextBox.val('');
   });
 });
 
-// var ol = jQuery('<ol></ol>');
-
-//   users.forEach(function (user) {
-//     ol.append(jQuery('<li></li>').text(user));
-//   })
-
-//   jQuery('#users').html(ol);

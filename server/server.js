@@ -8,7 +8,8 @@ const socketIO = require('socket.io');
 
 const {ObjectID} = require('mongodb');
 const {mongoose} = require('./db/mongoose');
-const {Zap} = require('./db/models/zap.js')
+const {Zap} = require('./db/models/zap');
+const {emptyRes} = require('./utils/empty-res');
 
 const publicPath = path.join(__dirname,'../public');
 const PORT = process.env.PORT;
@@ -24,19 +25,19 @@ app.use(bodyParser.urlencoded({extended:true}))
 io.on('connect', (socket) => {
 	console.log('New socket connected');
 
-	socket.on('search', (params, callback) => {
-		console.log(params);
-		Zap.find({name: { "$regex": params.query, "$options": "i" }}).then((results) => {
-			io.emit('updateSearchResults', {
-				results
-			});
-		});
-		callback();
-	});
+	socket.on('search', (params) => {
+		Zap.find({name: { "$regex": params.query, "$options": "i" }})
+		.then((results) => {
 
+			if(results.length === 0) { results = emptyRes };
+
+			io.emit('updateSearchResults', results);
+		});
+	});
 });
 
 app.post('/addZap', (req, res) => {
+	console.log(req.body);
 	var zap = new Zap({
 		name: req.body.name,
 		description: req.body.description,
@@ -48,20 +49,19 @@ app.post('/addZap', (req, res) => {
 		createdAt: new Date().getTime()
 	});
 	zap.save().then((doc) => {
-		res.redirect('./')
-		//no redirect, but render page with the result (can you do this templated via jQuery?)
+		res.redirect(200, './');
 	}).catch((e) => {
 		return res.status(400).send(e);
 	});
 });
 
 app.get('/zaps', (req, res) => {
-	Zap.find().then((todos) => {
-		res.send({todos});
+	Zap.find().then((zaps) => {
+		res.send({zaps});
 	}, (e) => {
 		res.status(400).send(e);
-	})
-})
+	});
+});
 
 server.listen(PORT, () => {
 	console.log(`server running on port ${PORT}`);

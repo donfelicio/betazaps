@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-	<title>Betazaps</title>
+	<title>Betazaps - Add your own zap</title>
 
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -16,7 +16,7 @@
 	<div class="logo flex-auto"></div>
 
 <div class="search-form center">
-		<form id="search-form" class="search-form__form ">
+		<form action="/" id="search-form" class="search-form__form ">
 			<div class="search-icon">
 				<svg width="15px" height="15px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Artboard-1" stroke="#777777" stroke-width="1.3"><g id="Group"><path d="M13.4044,7.0274 C13.4044,10.5494 10.5494,13.4044 7.0274,13.4044 C3.5054,13.4044 0.6504,10.5494 0.6504,7.0274 C0.6504,3.5054 3.5054,0.6504 7.0274,0.6504 C10.5494,0.6504 13.4044,3.5054 13.4044,7.0274 Z" id="Stroke-3"></path><path d="M11.4913,11.4913 L17.8683,17.8683" id="Stroke-7"></path></g></g></g></svg>
 			</div>
@@ -26,31 +26,27 @@
 	</div>
 	<div class="header-end"></div>
 </div>
-<div class="main">
+	<div class="main">
 	<div class="container">
-		<h4 class="center mw title">Betazaps lists all Zapier zaps in beta</h4>
-		<ul class="search-results__results center br mw bo" id="search-results"></ul>
+ <h4 class="center mw title" id="search-results">Add your own zap to Betazaps</h4>
 
-		<script id="search-result-template" type="text/template">
-	    <li class="search-results">
-	      <div class="search-result__title">
-	        <h4>{{name}}</h4>
-	        <span>{{createdBy}}</span>
-	      </div>
-	      <div class="search-result__body">
-	          <p>{{description}}<p>
-	          <p>{{createdAt}}</p>
-	          <hr>
-	      </div>
-	    </li>
-	  	</script>
-		
-		<script src="/socket.io/socket.io.js"></script>
-		<script src="/js/libs/jquery-3.3.1.min.js"></script>
-		<script src="/js/libs/mustache.js"></script>
-		<script src="/js/libs/moment.js"></script>
-		<script src="/js/index.js"></script>
+	<div id="zap-form" class="zap-form mw bo br bg-white center">
+		<form action="addZap" method="post">
+			<label>Zap name:</label>
+			<input type="text" name="name" autocomplete="off" />
+
+			<label>URL to Zap:</label>
+			<input type="text" name="url" autocomplete="off"/>
+
+			<label>Developer name:</label>
+			<input type="text" name="developer" autocomplete="off"/>
+
+			<label>Description of zap:</label>
+			<textarea name="description" autocomplete="off"></textarea>
+			<button class="btn btn-primary" type="submit">Submit</button>
+		</form>
 	</div>
-</div>
+	</div>
+	</div>
 </body>
 </html>

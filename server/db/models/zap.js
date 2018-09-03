@@ -11,6 +11,10 @@ var Zap = mongoose.model('Zap', {
 		type: String, 
 		trim: true
 	},
+	url: {
+		type: String, 
+		trim: true
+	},
 	popularity: {
 		type: Number
 	},
