@@ -10,6 +10,7 @@ const {ObjectID} = require('mongodb');
 const {mongoose} = require('./db/mongoose');
 const {Zap} = require('./db/models/zap');
 const {emptyRes} = require('./utils/empty-res');
+const {sendMail} = require('./utils/mailer');
 
 const publicPath = path.join(__dirname,'../public');
 const PORT = process.env.PORT;
@@ -27,9 +28,9 @@ io.on('connect', (socket) => {
 
 	socket.on('search', (params) => {
 		if (params.query) {
-			search = {name: { "$regex": params.query, "$options": "i" }};
+			search = {isValid: true, name: { "$regex": params.query.replace( /\+/g, ' ' ), "$options": "i" }};
 		} else {
-			search = {}
+			search = {isValid: true}
 		}
 		Zap.find(search)
 		.then((results) => {
@@ -48,30 +49,68 @@ app.get('/', (req, res) => {
 });
 
 app.post('/addzap', (req, res) => {
+
+	const prefix = 'http://';
+	const prefixs = 'https://';
+	let url = req.body.url;
+
+	if (url.substr(0, prefix.length) !== prefix && url.substr(0, prefixs.length) !== prefixs)
+	{
+	    url = prefixs + url;
+	}
+
 	var zap = new Zap({
 		name: req.body.name,
 		description: req.body.description,
-		popularity: req.body.popularity,
-		quality: req.body.quality,
-		maintenance: req.body.maintenance,
 		developer: req.body.developer,
+		url: url,
 		//uploadedBy: add userId 
 		createdAt: new Date().getTime()
 	});
 	zap.save().then((doc) => {
-		res.redirect(`./?query=${req.body.name}`);
+
+		const protocol = 'http://';
+		if(req.connection.encrypted) {
+			protocol = 'https://';
+		}		
+		
+		sendMail(
+			'felix@donfelicio.com', 
+			'felix@donfelicio.com', 
+			'New BetaZaps add request, please validate', 
+			'There was a new addition to betazaps, please verify \n' + 
+			`name: ${req.body.name} \n` +
+			`description: ${req.body.description} \n` +
+			`developer: ${req.body.developer} \n` +
+			`url: ${url} \n` +
+			`validate now: ${protocol}${req.headers.host}/validate/${doc._id} \n`
+			);
+
+		res.redirect(`./`);
+
 	}).catch((e) => {
 		return res.status(400).send(e);
 	});
 });
 
-// app.get('/zaps', (req, res) => {
-// 	Zap.find().then((zaps) => {
-// 		res.send({zaps});
-// 	}, (e) => {
-// 		res.status(400).send(e);
-// 	});
-// });
+app.get('/validate/:id', (req, res) => {
+	var id  = req.params.id;
+
+	if (!ObjectID.isValid(id)) {
+		return res.status(400).send('Not a valid zap');
+	}
+
+	Zap.findOneAndUpdate({
+		_id: id
+	}, {$set: {isValid: true}}, {new: true}).then((zap) => {
+		if (!zap) {
+			return res.status(400).send('Unable to update zap')
+		}
+		res.send(zap)
+	}).catch((e) => {
+		return res.status(400).send();
+	});
+});
 
 server.listen(PORT, () => {
 	console.log(`server running on port ${PORT}`);

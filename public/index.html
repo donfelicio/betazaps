@@ -35,9 +35,11 @@
 	</div>
 </div>
 <div class="footer">
-	<div class="footer-section">
-		<a href="add.html">Add your beta zap</a>
-	</div>
+	<a href="add.html" class="footer-section">
+		<div class="footer-text">
+			Add your beta zap
+		</div>
+	</a>
 </div>
 
 
@@ -50,7 +52,8 @@
       </div>
       <div class="search-result__body">
           <p>{{description}}<p>
-          <p>{{createdAt}}</p>
+          <a target="_blank" href="{{url}}"><p class="url-field">{{url}}</p></a>
+          <p class="date-field">Published: {{createdAt}}</p>
           <hr>
       </div>
     </li>

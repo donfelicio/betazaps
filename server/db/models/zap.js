@@ -31,10 +31,13 @@ var Zap = mongoose.model('Zap', {
 	uploadedBy: {
 		type: mongoose.Schema.Types.ObjectId,
 //		required: true
-	}, 
+	},
+	isValid: {
+		type: Boolean,
+		default: false
+	},
 	createdAt: {
-		type: Number, 
-		
+		type: Number 
 	}
 });
 

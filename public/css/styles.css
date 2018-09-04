@@ -7,7 +7,7 @@
   padding: 0;
   font-family: 'Raleway', sans-serif;
   font-weight: 300;
-  font-size: 0.97rem;
+  font-size: 1.5rem;
 }
 
 ul, li {
@@ -16,6 +16,12 @@ ul, li {
 
 h3 {
   font-weight: 600;
+  text-align: center;
+}
+
+h4 {
+  font-weight: 600;
+  font-size:3rem;
   text-align: center;
 }
 
@@ -38,6 +44,18 @@ button:hover {
 button:disabled {
   cursor: default;
   background: #698ea5;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.date-field {
+  font-size:1rem;
+}
+
+.url-field {
+  font-size:1.2rem;
 }
 
 .center {
@@ -265,20 +283,26 @@ button:disabled {
   background: #ffffff;
   height:10vh;
   display: flex;
-  padding: 10px;
   /*height: 60px;*/
   flex-shrink: 0;
-  width:50vh;
   margin: auto auto;
+
 }
 
 .footer-section {
   padding:10px;
-  margin:10px;
-  border-style: none solid none solid;
+  width:150px;
+  height:35px;
+  border-style: none solid solid solid;
   border-width: 1px;
   border-color: rgba(0,0,0,.1);
-  margin: auto auto;
+  margin-left: auto;
+  margin-right: auto;  
+  text-align: center;
+}
+
+.footer-text {
+  font-size:0.97rem;
 }
 
 .search-results__footer form {

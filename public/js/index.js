@@ -40,10 +40,10 @@ socket.on('updateSearchResults', function (results) {
 				name: results[key].name,
 				description: results[key].description,
 				createdBy: results[key].createdBy,
+				url: results[key].url,
 				createdAt: moment(results[key].createdAt).format('DD-MM-YYYY')
 			});
 
-//			if (!html) { let html = jQuery(item) }else{ html.append(item)};			
 			!html ? html = jQuery(item) : html.append(item);				
 		});
 
