@@ -59,6 +59,8 @@ app.post('/addzap', (req, res) => {
 	    url = prefixs + url;
 	}
 
+	Zap.findOne({})
+
 	var zap = new Zap({
 		name: req.body.name,
 		description: req.body.description,
@@ -82,8 +84,9 @@ app.post('/addzap', (req, res) => {
 			`name: ${req.body.name} \n` +
 			`description: ${req.body.description} \n` +
 			`developer: ${req.body.developer} \n` +
-			`url: ${url} \n` +
-			`validate now: ${protocol}${req.headers.host}/validate/${doc._id} \n`
+			`url: ${url} \n\n\n` +
+			`validate now: ${protocol}${req.headers.host}/validate/${doc._id} \n\n\n` +
+			`remove now: ${protocol}${req.headers.host}/remove/${doc._id} \n`
 			);
 
 		res.redirect(`./?entry=done`);
@@ -111,6 +114,21 @@ app.get('/validate/:id', (req, res) => {
 		return res.status(400).send();
 	});
 });
+
+app.get('/remove/:id', (req, res) => {
+	var id = req.params.id;
+	if(!ObjectID.isValid(id)) {
+		return res.status(400).send('Not a valid ID');
+	}
+
+	Zap.findOneAndRemove({
+		_id: id 
+	}).then((zap) => {
+		res.status(200).send(zap);
+	}).catch((e) => 
+		res.status(400).send(e)
+	);
+})
 
 server.listen(PORT, () => {
 	console.log(`server running on port ${PORT}`);
