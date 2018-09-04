@@ -19,12 +19,13 @@ socket.on('connect', function () {
 		query: query_string.query
 	});
 	if(query_string.entry) {	
-		jQuery('#alert').html('Thank you! Your Zap will be up after validation');
+		jQuery('#container').prepend(
+			'<div id="alert" class="alert alert-success" role="alert">Thank you! Your Zap will be up after validation</div>'
+			);
+
 			setTimeout(function() {
 				jQuery('#alert').fadeOut(); 
 			}, 2000);
-	} else { 
-		jQuery('#alert').hide();
 	}
 });
 
