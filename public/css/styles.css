@@ -50,14 +50,6 @@ a:hover {
   text-decoration: none;
 }
 
-.date-field {
-  font-size:1rem;
-}
-
-.url-field {
-  font-size:1.2rem;
-}
-
 .center {
   margin-right: auto;
   margin-left: auto;
@@ -278,6 +270,19 @@ a:hover {
   background-color: #ffffff;
   margin-top:10px;
 }
+
+.date-field {
+  font-size:1rem;
+}
+
+.url-field {
+  font-size:1.2rem;
+}
+
+.description-field {
+  white-space: pre-wrap;
+}
+
 
 .footer {
   background: #ffffff;

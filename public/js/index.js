@@ -18,14 +18,15 @@ socket.on('connect', function () {
 	socket.emit('search', {
 		query: query_string.query
 	});
+	
 	if(query_string.entry) {	
 		jQuery('#container').prepend(
 			'<div id="alert" class="alert alert-success" role="alert">Thank you! Your Zap will be up after validation</div>'
-			);
+		);
 
-			setTimeout(function() {
-				jQuery('#alert').fadeOut(); 
-			}, 2000);
+		setTimeout(function() {
+			jQuery('#alert').fadeOut(); 
+		}, 2000);
 	}
 });
 
