@@ -50,6 +50,10 @@ a:hover {
   text-decoration: none;
 }
 
+.alert:emtpy {
+  display: none;
+}
+
 .date-field {
   font-size:1rem;
 }
