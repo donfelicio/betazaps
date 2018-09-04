@@ -12,9 +12,5 @@
 		"JWT_SECTRET": "nsufy734h2riuysdf8s09f80s98dfhsdf",
 		"MAIL_USER": "felix@donfelicio.com",
 		"MAIL_PASS": "flex1234"
-	},
-	"production": {
-		"MAIL_USER": "felix@donfelicio.com",
-		"MAIL_PASS": "flex1234"	
 	}
 }
