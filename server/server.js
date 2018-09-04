@@ -124,6 +124,9 @@ app.get('/remove/:id', (req, res) => {
 	Zap.findOneAndRemove({
 		_id: id 
 	}).then((zap) => {
+		if(!zap) {
+			return res.status(404).send('Zap not found');
+		}
 		res.status(200).send(zap);
 	}).catch((e) => 
 		res.status(400).send(e)
