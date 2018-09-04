@@ -86,7 +86,7 @@ app.post('/addzap', (req, res) => {
 			`validate now: ${protocol}${req.headers.host}/validate/${doc._id} \n`
 			);
 
-		res.redirect(`./`);
+		res.redirect(`./?entry=done`);
 
 	}).catch((e) => {
 		return res.status(400).send(e);

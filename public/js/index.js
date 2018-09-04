@@ -18,10 +18,15 @@ socket.on('connect', function () {
 	socket.emit('search', {
 		query: query_string.query
 	});
+	if(query_string.entry) {	
+		jQuery('#alert').html('Thank you! Your Zap will be up after validation');
+			setTimeout(function() {
+				jQuery('#alert').fadeOut(); 
+			}, 2000);
+	};
 });
 
 socket.on('showResults', function () {
-	console.log('search action');
 	const params = jQuery.deparam(window.location.search);
 
 	socket.emit('search', params, function (err) {
