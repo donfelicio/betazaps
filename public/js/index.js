@@ -23,7 +23,9 @@ socket.on('connect', function () {
 			setTimeout(function() {
 				jQuery('#alert').fadeOut(); 
 			}, 2000);
-	};
+	} else { 
+		jQuery('#alert').hide();
+	}
 });
 
 socket.on('showResults', function () {
